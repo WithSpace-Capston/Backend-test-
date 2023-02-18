@@ -1,5 +1,6 @@
 package domain;
 
+import domain.space.TeamSpace;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,10 @@ public class Team {
 
     @OneToMany(mappedBy = "team")
     private List<MemberTeam> memberTeams = new ArrayList<>();
+
+    @OneToOne(mappedBy = "team")
+    private TeamSpace teamSpace;
+
 
     private String teamName;
 

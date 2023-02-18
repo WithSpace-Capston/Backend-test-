@@ -23,13 +23,9 @@ public class Member {   //회원
     @OneToMany(mappedBy = "member")
     private List<MemberTeam> memberTeams= new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
-    private List<MemberSpace> memberSpaces = new ArrayList<>();
+    @OneToOne(mappedBy = "member")
+    private MemberSpace memberSpace;
 
-
-    public void setMemberSpace(MemberSpace memberSpace) {
-        memberSpaces.add(memberSpace);
-    }
 
     private String email;
     private String password;

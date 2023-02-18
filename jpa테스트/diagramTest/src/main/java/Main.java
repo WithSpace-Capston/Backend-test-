@@ -1,7 +1,10 @@
 import domain.Member;
 import domain.MemberTeam;
 import domain.Team;
+import domain.friend.FriendShip;
 import domain.space.MemberSpace;
+import domain.space.Page;
+import domain.space.TeamSpace;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -44,26 +47,59 @@ public class Main {
             member2.setMemberName("한슬이");
             member2.setEmail("hanseul@example.com");
             member2.setPassword("password2");
+
+            //개인에게 스페이스 주기
             MemberSpace memberSpace = new MemberSpace(member2);
-            MemberSpace memberSpace2 = new MemberSpace(member2);
             member.setMemberSpace(memberSpace);
-            member.setMemberSpace(memberSpace2);
+            em.persist(memberSpace);
+
+            //팀에게 스페이스 주기
+            TeamSpace teamSpace = new TeamSpace(team);
+            team.setTeamSpace(teamSpace);
+            em.persist(teamSpace);
 
             // 멤버-팀 관계 생성
             MemberTeam memberTeam = new MemberTeam(member, team);
 
-            // 멤버 - 멤버팀 - 팀 이어주기 - 관련 메소드 필요
+            // 멤버 - 멤버팀 - 팀 이어주기 -
             member.getMemberTeams().add(memberTeam);
             team.getMemberTeams().add(memberTeam);
 
+            //팀 스페이스에 페이지를 넣기
+            Page teamPage = new Page();
+            teamSpace.getPageList().add(teamPage);
+            teamPage.setSpace(teamSpace);
 
+            //개인 스페이스에 페이지 넣기
+            Page memberPage = new Page();
+            memberSpace.getPageList().add(memberPage);
+            memberPage.setSpace(memberSpace);
+
+            //페이지 밑에 페이지 넣기
+            Page childPage = new Page();
+            memberPage.addchildPage(childPage);
+
+            //친구관계 만들기
+            FriendShip friendship = new FriendShip();
+            friendship.setMember(member);
+            friendship.setFriend(member2);
+            friendship.setStatus(FriendShip.Status.PENDING);
+            em.persist(friendship);
+
+
+
+
+            //애들 생명주기 맞춰야됨..
             em.persist(team);
             em.persist(member);
             em.persist(memberTeam);
-            em.persist(member2);
-            em.persist(memberSpace); //얘는 member이랑 생명주기? 맞추는걸로 바꿔야됨
-            em.persist(memberSpace2);
 
+
+            em.persist(member2);
+
+            em.persist(memberSpace);
+            em.persist(memberPage);
+            em.persist(teamPage);
 
 
             System.out.println("test==========================");

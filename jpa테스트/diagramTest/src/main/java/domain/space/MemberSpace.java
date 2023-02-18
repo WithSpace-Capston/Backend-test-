@@ -12,9 +12,9 @@ import javax.persistence.*;
 @Setter
 public class MemberSpace extends Space {
 
-    @Id @GeneratedValue
-    @Column(name = "space_id")
-    private Long id;
+    //@Id @GeneratedValue
+    //@Column(name = "space_id")
+    //private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

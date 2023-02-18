@@ -13,13 +13,14 @@ import javax.persistence.*;
 @Setter
 public class TeamSpace extends Space {
 
-    @Id @GeneratedValue
-    private Long id;
+    //@Id @GeneratedValue
+    //private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
 
-
-
+    public TeamSpace(Team team) {
+        this.team = team;
+    }
 }
