@@ -2,6 +2,8 @@ package domain.space;
 
 import domain.Member;
 import domain.Team;
+import domain.space.schedule.Category;
+import domain.space.schedule.Schedule;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,10 +24,18 @@ public abstract class Space {
     @Column(name = "space_type", insertable = false, updatable = false)
     private String type;
 
-    @OneToMany(mappedBy = "space")
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<Page> pageList = new ArrayList<>();
 
-    //스케쥴 넣을 예정
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "space"
+                , cascade = CascadeType.ALL)
+    private Schedule schedule; //스페이스 생성시 바로 만들어서 넣어주기
+
+
+
+    public Space(){
+        this.schedule = new Schedule(this);
+    }
 
 
 

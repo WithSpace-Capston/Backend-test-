@@ -2,16 +2,17 @@ import domain.Member;
 import domain.MemberTeam;
 import domain.Team;
 import domain.friend.FriendShip;
+import domain.space.Block;
 import domain.space.MemberSpace;
 import domain.space.Page;
 import domain.space.TeamSpace;
+import domain.space.schedule.Category;
+import domain.space.schedule.ToDo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.awt.print.Book;
-import java.util.List;
 
 public class Main {
 
@@ -51,12 +52,12 @@ public class Main {
             //개인에게 스페이스 주기
             MemberSpace memberSpace = new MemberSpace(member2);
             member.setMemberSpace(memberSpace);
-            em.persist(memberSpace);
+            //em.persist(memberSpace);
 
             //팀에게 스페이스 주기
             TeamSpace teamSpace = new TeamSpace(team);
             team.setTeamSpace(teamSpace);
-            em.persist(teamSpace);
+            //em.persist(teamSpace);
 
             // 멤버-팀 관계 생성
             MemberTeam memberTeam = new MemberTeam(member, team);
@@ -79,28 +80,42 @@ public class Main {
             Page childPage = new Page();
             memberPage.addchildPage(childPage);
 
-            //친구관계 만들기
+            //친구관계
             FriendShip friendship = new FriendShip();
             friendship.setMember(member);
             friendship.setFriend(member2);
             friendship.setStatus(FriendShip.Status.PENDING);
-            em.persist(friendship);
 
+//            TeamSpace childSpace = new TeamSpace(team);
+//            team.setTeamSpace(childSpace);
+//            teamSpace.addChildSpace(childSpace);
 
+            //블록생성
+            Block block = new Block(memberPage);
+
+            //새 카테고리 생성
+            Category category = new Category(memberSpace.getSchedule());
+
+            //새 투두 생성
+            ToDo toDo = new ToDo(category);
+            category.getTodoList().add(toDo);
 
 
             //애들 생명주기 맞춰야됨..
+            em.persist(memberSpace);
+            em.persist(teamSpace);
+
+            em.persist(category);
+
+            em.persist(friendship);
             em.persist(team);
             em.persist(member);
             em.persist(memberTeam);
-
-
             em.persist(member2);
-
             em.persist(memberSpace);
             em.persist(memberPage);
             em.persist(teamPage);
-
+            em.persist(block);
 
             System.out.println("test==========================");
 

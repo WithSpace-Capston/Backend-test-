@@ -16,7 +16,6 @@ public class Page {
     @GeneratedValue
     private Long id;
 
-
     @OneToMany(mappedBy = "parentPage", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Page> childPages = new ArrayList<>();
 
@@ -29,7 +28,11 @@ public class Page {
     private Space space;
 
 
-    //블록
+    @OneToMany(mappedBy = "page")
+    private List<Block> blockList = new ArrayList<>();
+
+
+
 
     public void addchildPage(Page page) {
         page.setParentPage(this);

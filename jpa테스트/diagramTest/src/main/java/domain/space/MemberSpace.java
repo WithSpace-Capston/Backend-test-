@@ -24,3 +24,5 @@ public class MemberSpace extends Space {
         this.member = member;
     }
 }
+
+
