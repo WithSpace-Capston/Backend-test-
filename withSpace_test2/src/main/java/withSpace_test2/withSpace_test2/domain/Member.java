@@ -23,7 +23,7 @@ public class Member {   //회원
     @OneToMany(mappedBy = "member")
     private List<MemberTeam> memberTeams= new ArrayList<>();
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MemberSpace memberSpace;
 
 

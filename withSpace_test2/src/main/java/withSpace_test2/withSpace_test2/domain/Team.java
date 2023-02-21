@@ -22,7 +22,7 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<MemberTeam> memberTeams = new ArrayList<>();
 
-    @OneToOne(mappedBy = "team")
+    @OneToOne(mappedBy = "team", cascade = CascadeType.ALL)
     private TeamSpace teamSpace;
 
 

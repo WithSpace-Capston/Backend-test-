@@ -32,6 +32,8 @@ JDBC URL : jdbc:h2:~/withSpace_test2
    Member를 만들고 테스트 할때, Member가 persist되지 않아 해당 Member를 DB에서 눈으로 확인하기 힘듦. 
    하지만 분리하는게 맞다고 생각하고 기능적으론 문제 없는데 눈으로..보고싶다면 어쩌지 
 
++) 스페이스는 Member, Team 생성시에 바로 할당해줘야 되려나 일단 cascade로 맞춰둠
+
 
 
 - - - - - -
