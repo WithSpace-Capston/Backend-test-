@@ -15,6 +15,7 @@ import withSpace_test2.withSpace_test2.domain.space.Space;
 public class Schedule {
 
     @Id @GeneratedValue
+    @Column(name="schedule_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

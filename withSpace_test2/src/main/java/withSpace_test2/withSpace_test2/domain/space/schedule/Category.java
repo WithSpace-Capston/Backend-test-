@@ -17,6 +17,7 @@ public class Category {
 
     @Id
     @GeneratedValue
+    @Column(name="category_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
