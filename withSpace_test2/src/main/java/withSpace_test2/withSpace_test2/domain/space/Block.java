@@ -15,6 +15,7 @@ public class Block {
 
     @Id
     @GeneratedValue
+    @Column(name = "block_id")
     private Long id;
 
     @ManyToOne

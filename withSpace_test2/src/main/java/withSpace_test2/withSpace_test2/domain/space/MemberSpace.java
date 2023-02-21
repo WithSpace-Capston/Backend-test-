@@ -15,8 +15,6 @@ import withSpace_test2.withSpace_test2.domain.Member;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberSpace extends Space {
 
-    @EmbeddedId
-    private MemberSpaceId id;
 
     //@Id @GeneratedValue
     //@Column(name = "space_id")

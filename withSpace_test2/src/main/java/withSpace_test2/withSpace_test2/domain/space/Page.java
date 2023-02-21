@@ -15,6 +15,7 @@ public class Page {
 
     @Id
     @GeneratedValue
+    @Column(name = "page_id")
     private Long id;
 
     @OneToMany(mappedBy = "parentPage", cascade = CascadeType.ALL, orphanRemoval = true)

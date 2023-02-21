@@ -18,6 +18,7 @@ public class FriendShip {
 
     @Id
     @GeneratedValue
+    @Column(name = "friendship_id")
     private Long id;
 
     @ManyToOne

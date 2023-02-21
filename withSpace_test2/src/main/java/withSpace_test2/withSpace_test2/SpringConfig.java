@@ -34,11 +34,6 @@ public class SpringConfig {
     }
 
     @Bean
-    public TeamService teamService() {
-        return new TeamService(teamRepository);
-    }
-
-    @Bean
     public SpaceService spaceService() {
         return new SpaceService(spaceRepository);
     }

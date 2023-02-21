@@ -1,19 +1,24 @@
 package withSpace_test2.withSpace_test2.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import withSpace_test2.withSpace_test2.domain.Member;
 import withSpace_test2.withSpace_test2.domain.MemberTeam;
 import withSpace_test2.withSpace_test2.domain.Team;
+import withSpace_test2.withSpace_test2.repository.MemberTeamRepository;
 import withSpace_test2.withSpace_test2.repository.TeamRepository;
 
 import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Service
 public class TeamService {
 
     private final TeamRepository teamRepository;
+
+    private final MemberTeamRepository memberTeamRepository;
 
     @Transactional
     public Long makeTeam(Member member, Team team) { //팀 생성 - 팀을 생성하는 회원에게는 바로 팀 부여
@@ -40,6 +45,7 @@ public class TeamService {
     public void makeMemberTeamRelation(Member member, Team team) {
         // 멤버-팀 관계 생성
         MemberTeam memberTeam = new MemberTeam(member, team);
+        memberTeamRepository.save(memberTeam);
 
         // 멤버 - 멤버팀 - 팀 이어주기
         member.getMemberTeams().add(memberTeam);
