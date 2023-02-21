@@ -2,7 +2,9 @@ package withSpace_test2.withSpace_test2.domain.space;
 
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import withSpace_test2.withSpace_test2.domain.Member;
 
@@ -10,7 +12,11 @@ import withSpace_test2.withSpace_test2.domain.Member;
 @DiscriminatorValue("member")
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberSpace extends Space {
+
+    @EmbeddedId
+    private MemberSpaceId id;
 
     //@Id @GeneratedValue
     //@Column(name = "space_id")
