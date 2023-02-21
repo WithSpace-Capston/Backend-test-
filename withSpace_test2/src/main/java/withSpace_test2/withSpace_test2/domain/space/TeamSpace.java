@@ -2,7 +2,9 @@ package withSpace_test2.withSpace_test2.domain.space;
 
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import withSpace_test2.withSpace_test2.domain.Team;
 
@@ -10,12 +12,13 @@ import withSpace_test2.withSpace_test2.domain.Team;
 @DiscriminatorValue("team")
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TeamSpace extends Space {
 
     //@Id @GeneratedValue
     //private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "team_id")
     private Team team;
 

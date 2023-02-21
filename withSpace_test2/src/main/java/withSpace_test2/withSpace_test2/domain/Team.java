@@ -25,6 +25,7 @@ public class Team {
     @OneToOne(mappedBy = "team", cascade = CascadeType.ALL)
     private TeamSpace teamSpace;
 
+    private int memberCount;
 
     private String teamName;
 

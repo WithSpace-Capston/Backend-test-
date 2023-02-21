@@ -17,6 +17,7 @@ public abstract class Space {
 
     @Id
     @GeneratedValue
+    @Column(name = "space_id")
     private Long id;
 
     @Column(name = "space_type", insertable = false, updatable = false)
@@ -30,11 +31,9 @@ public abstract class Space {
     private Schedule schedule;
 
 
-
-    public Space(){
+    public Space() {
         //this.schedule = new Schedule(this); //스페이스 생성시 바로 만들어서 넣어줌
     }
-
 
 
     //양방향 연관관계..
@@ -45,7 +44,6 @@ public abstract class Space {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "member_id")
 //    private Member member;
-
 
 
 }

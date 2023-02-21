@@ -2,12 +2,15 @@ package withSpace_test2.withSpace_test2.domain;
 
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberTeam {  //회원과 팀 사이의 엔티티
 
 
@@ -44,7 +47,7 @@ public class MemberTeam {  //회원과 팀 사이의 엔티티
 
     public MemberTeam(Member member, Team team) {  //생성자
 
-        this.id= new MemberTeamId(member.getId(), team.getId());
+        this.id = new MemberTeamId(member.getId(), team.getId());
 
         this.member = member;
         this.team = team;
