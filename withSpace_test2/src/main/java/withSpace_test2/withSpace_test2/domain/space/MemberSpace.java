@@ -16,7 +16,7 @@ public class MemberSpace extends Space {
     //@Column(name = "space_id")
     //private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 

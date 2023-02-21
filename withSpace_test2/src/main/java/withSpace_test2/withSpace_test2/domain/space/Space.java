@@ -25,13 +25,14 @@ public abstract class Space {
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<Page> pageList = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "space")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "space"
+            , cascade = CascadeType.ALL)
     private Schedule schedule;
 
 
 
     public Space(){
-        this.schedule = new Schedule(this); //스페이스 생성시 바로 만들어서 넣어줌
+        //this.schedule = new Schedule(this); //스페이스 생성시 바로 만들어서 넣어줌
     }
 
 
