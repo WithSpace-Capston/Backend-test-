@@ -10,7 +10,6 @@ import withSpace_test2.withSpace_test2.domain.space.Space;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule {
 

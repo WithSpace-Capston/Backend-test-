@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
 
@@ -28,9 +27,8 @@ public class Category {
 
     private String title; //카테고리 제목
 
-    public Category(Schedule schedule) {
+    public Category(Schedule schedule, String title) {
         this.schedule = schedule;
-        this.title = "test";
+        this.title = title;
     }
-
 }

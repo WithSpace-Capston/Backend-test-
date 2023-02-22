@@ -7,9 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ToDo {
 
@@ -22,8 +23,20 @@ public class ToDo {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    private String content;
+
+    private Boolean completed;
+
+    private LocalDateTime date;
+
     public ToDo(Category category) {
         this.category = category;
     }
 
+    public ToDo(Category category, String content, Boolean completed, LocalDateTime date) {
+        this.category = category;
+        this.content = content;
+        this.completed = completed;
+        this.date = date;
+    }
 }
