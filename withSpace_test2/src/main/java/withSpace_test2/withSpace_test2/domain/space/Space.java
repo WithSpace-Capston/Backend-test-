@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "space_type") //member스페이스, team 스페이스
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
 public abstract class Space {
@@ -19,9 +18,6 @@ public abstract class Space {
     @GeneratedValue
     @Column(name = "space_id")
     private Long id;
-
-    @Column(name = "space_type", insertable = false, updatable = false)
-    private String type;
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<Page> pageList = new ArrayList<>();

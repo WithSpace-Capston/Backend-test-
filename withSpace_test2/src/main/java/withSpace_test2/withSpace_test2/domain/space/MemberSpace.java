@@ -9,7 +9,6 @@ import lombok.Setter;
 import withSpace_test2.withSpace_test2.domain.Member;
 
 @Entity
-@DiscriminatorValue("member")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
