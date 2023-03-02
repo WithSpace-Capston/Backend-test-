@@ -9,18 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "space_type") //member스페이스, team 스페이스
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
 public abstract class Space {
 
     @Id
     @GeneratedValue
+    @Column(name = "space_id")
     private Long id;
-
-    @Column(name = "space_type", insertable = false, updatable = false)
-    private String type;
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private List<Page> pageList = new ArrayList<>();
@@ -30,11 +27,9 @@ public abstract class Space {
     private Schedule schedule;
 
 
-
-    public Space(){
+    public Space() {
         //this.schedule = new Schedule(this); //스페이스 생성시 바로 만들어서 넣어줌
     }
-
 
 
     //양방향 연관관계..
@@ -45,7 +40,6 @@ public abstract class Space {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "member_id")
 //    private Member member;
-
 
 
 }
