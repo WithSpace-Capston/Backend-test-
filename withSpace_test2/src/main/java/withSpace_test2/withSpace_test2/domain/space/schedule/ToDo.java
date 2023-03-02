@@ -23,7 +23,7 @@ public class ToDo {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private String content;
+    private String description;
 
     private Boolean completed;
 
@@ -35,7 +35,7 @@ public class ToDo {
 
     public ToDo(Category category, String content, Boolean completed, LocalDateTime date) {
         this.category = category;
-        this.content = content;
+        this.description = content;
         this.completed = completed;
         this.date = date;
     }

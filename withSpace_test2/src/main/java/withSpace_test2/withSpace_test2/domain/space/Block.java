@@ -22,6 +22,8 @@ public class Block {
     @JoinColumn(name = "page_id")
     private Page page;
 
+    private String content;
+
     public Block(Page page) {
         this.page = page;
     }
