@@ -8,6 +8,7 @@ import withSpace_test2.withSpace_test2.domain.friend.FriendShip;
 import withSpace_test2.withSpace_test2.domain.friend.FriendStatus;
 import withSpace_test2.withSpace_test2.repository.FriendShipRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -33,5 +34,10 @@ public class FriendShipService {
         } else {
             friendShip.setStatus(FriendStatus.PENDING);
         }
+    }
+
+    public List<Member> findFriendList(Member member) {
+        List<Member> friendList = friendShipRepository.findFriendListByMemberId(member.getId(), FriendStatus.ACCEPTED);
+        return friendList;
     }
 }

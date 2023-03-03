@@ -39,7 +39,7 @@ public class Member {   //회원
     private String memberName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private boolean status;
+    private Boolean status;
 
 
 }

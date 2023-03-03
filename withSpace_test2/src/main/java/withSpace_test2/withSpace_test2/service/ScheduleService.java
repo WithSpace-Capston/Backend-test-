@@ -21,7 +21,7 @@ public class ScheduleService {
         return saveSchedule.getId();
     }
 
-    Optional<Schedule> findSchedule(Long scheduleId) {
+    public Optional<Schedule> findSchedule(Long scheduleId) {
         Optional<Schedule> findSchedule = scheduleRepository.findById(scheduleId);
         return findSchedule;
     }
