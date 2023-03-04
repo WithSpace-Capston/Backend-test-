@@ -1,7 +1,8 @@
-package withSpace_test2.withSpace_test2.responsedto.schedule;
+package withSpace_test2.withSpace_test2.responsedto.schedule.category;
 
 import lombok.Data;
 import withSpace_test2.withSpace_test2.domain.space.schedule.Category;
+import withSpace_test2.withSpace_test2.responsedto.schedule.ToDoDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

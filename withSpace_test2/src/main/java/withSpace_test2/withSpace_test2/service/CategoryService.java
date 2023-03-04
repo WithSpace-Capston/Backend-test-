@@ -22,7 +22,7 @@ public class CategoryService {
         return save.getId();
     }
 
-    Optional<Category> findCategory(Long categoryId) {
+    public Optional<Category> findCategory(Long categoryId) {
         Optional<Category> findCategory = categoryRepository.findById(categoryId);
         return findCategory;
     }
