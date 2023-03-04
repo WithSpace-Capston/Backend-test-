@@ -1,4 +1,4 @@
-package withSpace_test2.withSpace_test2.responsedto.schedule;
+package withSpace_test2.withSpace_test2.responsedto.schedule.todo;
 
 import lombok.Data;
 import withSpace_test2.withSpace_test2.domain.space.schedule.ToDo;
