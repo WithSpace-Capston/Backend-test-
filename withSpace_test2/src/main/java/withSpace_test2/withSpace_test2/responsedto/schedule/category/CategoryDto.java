@@ -2,7 +2,7 @@ package withSpace_test2.withSpace_test2.responsedto.schedule.category;
 
 import lombok.Data;
 import withSpace_test2.withSpace_test2.domain.space.schedule.Category;
-import withSpace_test2.withSpace_test2.responsedto.schedule.ToDoDto;
+import withSpace_test2.withSpace_test2.responsedto.schedule.todo.ToDoDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

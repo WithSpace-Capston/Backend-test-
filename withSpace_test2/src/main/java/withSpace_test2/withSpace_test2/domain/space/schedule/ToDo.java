@@ -2,10 +2,7 @@ package withSpace_test2.withSpace_test2.domain.space.schedule;
 
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -29,13 +26,9 @@ public class ToDo {
 
     private LocalDateTime date;
 
-    public ToDo(Category category) {
+    public ToDo(Category category, String description, Boolean completed, LocalDateTime date) {
         this.category = category;
-    }
-
-    public ToDo(Category category, String content, Boolean completed, LocalDateTime date) {
-        this.category = category;
-        this.description = content;
+        this.description = description;
         this.completed = completed;
         this.date = date;
     }
