@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ScheduleController {
 
-    private static final int SUCCESS = 201;
+    private static final int CREATED = 201;
 
     private final ScheduleService scheduleService;
 
@@ -50,7 +50,7 @@ public class ScheduleController {
         Category category = new Category(schedule.get(), categoryRequestDto.getTitle());
 
         Long saveCategoryId = categoryService.makeCategory(category);
-        CategoryCreateResponseDto categoryCreateResponseDto = new CategoryCreateResponseDto(saveCategoryId, SUCCESS, "카테고리가 등록되었습니다.");
+        CategoryCreateResponseDto categoryCreateResponseDto = new CategoryCreateResponseDto(saveCategoryId, CREATED, "카테고리가 등록되었습니다.");
         return new ResponseEntity<>(categoryCreateResponseDto, HttpStatus.CREATED);
     }
 
@@ -60,7 +60,7 @@ public class ScheduleController {
         ToDo todo = new ToDo(findCategory.get(), toDoRequestDto.getDescription(), toDoRequestDto.getCompleted(), LocalDateTime.now());
 
         Long saveToDoId = toDoService.makeTodo(todo);
-        ToDoCreateResponseDto createResponseDto = new ToDoCreateResponseDto(saveToDoId, SUCCESS, "할일이 등록되었습니다.");
+        ToDoCreateResponseDto createResponseDto = new ToDoCreateResponseDto(saveToDoId, CREATED, "할일이 등록되었습니다.");
         return new ResponseEntity<>(createResponseDto, HttpStatus.CREATED);
     }
 }
