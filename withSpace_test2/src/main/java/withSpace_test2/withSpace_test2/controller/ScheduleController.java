@@ -9,6 +9,7 @@ import withSpace_test2.withSpace_test2.domain.space.schedule.Schedule;
 import withSpace_test2.withSpace_test2.domain.space.schedule.ToDo;
 import withSpace_test2.withSpace_test2.requestdto.schedule.category.CategoryRequestDto;
 import withSpace_test2.withSpace_test2.requestdto.schedule.category.CategoryUpdateDto;
+import withSpace_test2.withSpace_test2.requestdto.schedule.todo.ToDoCompletedUpdateDto;
 import withSpace_test2.withSpace_test2.requestdto.schedule.todo.ToDoDescriptionUpdateDto;
 import withSpace_test2.withSpace_test2.requestdto.schedule.todo.ToDoRequestDto;
 import withSpace_test2.withSpace_test2.responsedto.schedule.category.CategoryBasicResponse;
@@ -80,5 +81,26 @@ public class ScheduleController {
         Long saveToDoId = toDoService.makeTodo(todo);
         ToDoBasicResponse createResponseDto = new ToDoBasicResponse(saveToDoId, CREATED, "할일이 등록되었습니다.");
         return new ResponseEntity<>(createResponseDto, HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/todo/{todoId}")
+    public ResponseEntity<ToDoBasicResponse> updateToDoDescription(@PathVariable("todoId") Long todoId, @RequestBody ToDoDescriptionUpdateDto toDoDescriptionUpdateDto) {
+        Long updateToDoId = toDoService.updateDescription(todoId, toDoDescriptionUpdateDto.getDescription());
+        ToDoBasicResponse toDoBasicResponse = new ToDoBasicResponse(updateToDoId, SUCCESS, "할일이 수정되었습니다.");
+        return new ResponseEntity<>(toDoBasicResponse, HttpStatus.OK);
+    }
+
+    @PatchMapping("/todo/{todoId}/completed")
+    public ResponseEntity<ToDoBasicResponse> updateToDoCompleted(@PathVariable("todoId") Long todoId, @RequestBody ToDoCompletedUpdateDto toDoCompletedUpdateDto) {
+        Long updateCompletedId = toDoService.updateCompleted(todoId, toDoCompletedUpdateDto.getCompleted());
+        ToDoBasicResponse toDoBasicResponse = new ToDoBasicResponse(updateCompletedId, SUCCESS, "할일 완료여부가 수정되었습니다.");
+        return new ResponseEntity<>(toDoBasicResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/todo/{todoId}")
+    public ResponseEntity<ToDoBasicResponse> deleteToDo(@PathVariable("todoId") Long todoId) {
+        toDoService.deleteToDo(todoId);
+        ToDoBasicResponse toDoBasicResponse = new ToDoBasicResponse(SUCCESS, "할일이 삭제되었습니다.");
+        return new ResponseEntity<>(toDoBasicResponse, HttpStatus.OK);
     }
 }

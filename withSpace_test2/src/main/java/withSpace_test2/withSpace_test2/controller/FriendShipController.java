@@ -8,6 +8,7 @@ import withSpace_test2.withSpace_test2.domain.Member;
 import withSpace_test2.withSpace_test2.domain.friend.FriendShip;
 import withSpace_test2.withSpace_test2.requestdto.friendship.FriendRequestDto;
 import withSpace_test2.withSpace_test2.responsedto.BasicResponse;
+import withSpace_test2.withSpace_test2.responsedto.friend.FriendBasicResponse;
 import withSpace_test2.withSpace_test2.responsedto.friend.FriendDto;
 import withSpace_test2.withSpace_test2.responsedto.friend.SendFriendShipResponseDto;
 import withSpace_test2.withSpace_test2.service.FriendShipService;

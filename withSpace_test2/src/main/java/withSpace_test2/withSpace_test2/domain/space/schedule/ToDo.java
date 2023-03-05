@@ -36,4 +36,8 @@ public class ToDo {
     public void changeDescription(String description) {
         this.description = description;
     }
+
+    public void updateCompleted(Boolean completed) {
+        this.completed = completed;
+    }
 }

@@ -28,9 +28,21 @@ public class ToDoService {
     }
 
     @Transactional
-    public Long update(Long id, String description) {
+    public Long updateDescription(Long id, String description) {
         Optional<ToDo> findToDo = toDoRepository.findById(id);
         findToDo.get().changeDescription(description);
         return findToDo.get().getId();
+    }
+
+    @Transactional
+    public Long updateCompleted(Long id, Boolean completed) {
+        Optional<ToDo> findToDo = toDoRepository.findById(id);
+        findToDo.get().updateCompleted(completed);
+        return findToDo.get().getId();
+    }
+
+    @Transactional
+    public void deleteToDo(Long id) {
+        toDoRepository.deleteById(id);
     }
 }
