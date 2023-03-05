@@ -17,4 +17,7 @@ public interface FriendShipRepository extends JpaRepository<FriendShip, Long> {
 
     @Query("select f.friend from FriendShip f where f.member.id=:memberId and f.status=:status")
     List<Member> findFriendListByMemberId(@Param("memberId") Long memberId, @Param("status") FriendStatus status);
+
+    @Query("select f from FriendShip f where f.member.id=:memberId and f.friend.id=:friendId")
+    public Optional<FriendShip> findFriendShip(@Param("memberId") Long memberId, @Param("friendId") Long friendId);
 }

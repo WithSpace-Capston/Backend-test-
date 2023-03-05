@@ -8,6 +8,7 @@ import withSpace_test2.withSpace_test2.domain.Member;
 import withSpace_test2.withSpace_test2.domain.friend.FriendShip;
 import withSpace_test2.withSpace_test2.requestdto.friendship.FriendRequestDto;
 import withSpace_test2.withSpace_test2.responsedto.BasicResponse;
+import withSpace_test2.withSpace_test2.responsedto.friend.FriendBasicResponse;
 import withSpace_test2.withSpace_test2.responsedto.friend.FriendDto;
 import withSpace_test2.withSpace_test2.responsedto.friend.SendFriendShipResponseDto;
 import withSpace_test2.withSpace_test2.service.FriendShipService;
@@ -20,6 +21,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 public class FriendShipController {
+
+    private static final int SUCCESS = 200;
+
     private static final int CREATED = 201;
 
 
@@ -50,5 +54,11 @@ public class FriendShipController {
 
         SendFriendShipResponseDto friendResponseDto = new SendFriendShipResponseDto(friendRequester.get().getId(), CREATED, "친구신청을 보냈습니다.");
         return new ResponseEntity<>(friendResponseDto, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/friend/{memberId}/{friendId}")
+    public ResponseEntity<FriendBasicResponse> deleteFriendShip(@PathVariable("memberId") Long memberId, @PathVariable("friendId") Long friendId) {
+        friendShipService.deleteFriendShip(memberId, friendId);
+        return new ResponseEntity<>(new FriendBasicResponse(SUCCESS, "친구 삭제가 정상적으로 되었습니다."), HttpStatus.OK);
     }
 }

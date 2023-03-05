@@ -40,4 +40,13 @@ public class FriendShipService {
         List<Member> friendList = friendShipRepository.findFriendListByMemberId(member.getId(), FriendStatus.ACCEPTED);
         return friendList;
     }
+
+    @Transactional
+    public void deleteFriendShip(Long memberId, Long friendId) {
+        Optional<FriendShip> findFriendShip1 = friendShipRepository.findFriendShip(memberId, friendId);
+        Optional<FriendShip> findFriendShip2 = friendShipRepository.findFriendShip(friendId, memberId);
+
+        friendShipRepository.deleteById(findFriendShip1.get().getId());
+        friendShipRepository.deleteById(findFriendShip2.get().getId());
+    }
 }

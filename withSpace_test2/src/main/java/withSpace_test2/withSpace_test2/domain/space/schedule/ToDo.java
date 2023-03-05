@@ -32,4 +32,12 @@ public class ToDo {
         this.completed = completed;
         this.date = date;
     }
+
+    public void changeDescription(String description) {
+        this.description = description;
+    }
+
+    public void updateCompleted(Boolean completed) {
+        this.completed = completed;
+    }
 }
