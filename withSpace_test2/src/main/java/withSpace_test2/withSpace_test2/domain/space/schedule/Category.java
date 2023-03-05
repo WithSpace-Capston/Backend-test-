@@ -32,4 +32,8 @@ public class Category {
         this.schedule = schedule;
         this.title = title;
     }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
 }

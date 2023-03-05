@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ToDoCreateResponseDto {
+public class ToDoBasicResponse {
     private Long id;
     private Integer status;
     private String message;

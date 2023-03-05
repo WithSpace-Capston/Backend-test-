@@ -22,8 +22,15 @@ public class ToDoService {
         return saveToDo.getId();
     }
 
-    Optional<ToDo> findToDo(Long todoId) {
+    public Optional<ToDo> findToDo(Long todoId) {
         Optional<ToDo> findTodo = toDoRepository.findById(todoId);
         return findTodo;
+    }
+
+    @Transactional
+    public Long update(Long id, String description) {
+        Optional<ToDo> findToDo = toDoRepository.findById(id);
+        findToDo.get().changeDescription(description);
+        return findToDo.get().getId();
     }
 }

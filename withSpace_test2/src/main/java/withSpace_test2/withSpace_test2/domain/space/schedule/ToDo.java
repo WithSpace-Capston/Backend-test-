@@ -32,4 +32,8 @@ public class ToDo {
         this.completed = completed;
         this.date = date;
     }
+
+    public void changeDescription(String description) {
+        this.description = description;
+    }
 }
