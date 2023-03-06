@@ -46,9 +46,9 @@ public class FriendShipController {
         //친구 요청 보낸 사람
         Optional<Member> friendRequester = memberService.findOne(friendRequestDto.getId());
         //친구 요청 받은 사람
-        Optional<Member> friendRequestee = memberService.findOne(friendRequestDto.getFriendId());
+        Optional<Member> friendReceiver = memberService.findOne(friendRequestDto.getFriendId());
 
-        FriendShip friendShip = new FriendShip(friendRequester.get(), friendRequestee.get());
+        FriendShip friendShip = new FriendShip(friendRequester.get(), friendReceiver .get());
 
         friendShipService.addFriend(friendShip);
 

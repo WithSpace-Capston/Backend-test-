@@ -14,12 +14,13 @@ import withSpace_test2.withSpace_test2.domain.space.schedule.ToDo;
 import withSpace_test2.withSpace_test2.service.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class TestDB {
-    //scheduleInit()에 사용
 
+    //scheduleInit()에 사용
     private final CategoryService categoryService;
 
     private final ScheduleService scheduleService;
@@ -37,28 +38,24 @@ public class TestDB {
     public void postConstruct() {
         scheduleInit();
         friendInit();
+        teamInit();
+    }
+
+    @Transactional
+    public void teamInit() {
+
     }
 
     @Transactional
     public void friendInit() {
-        Member memberA = new Member();
-        memberA.setMemberName("memberA");
-        memberA.setEmail("aaa@naver.com");
-        memberA.setStatus(true);
+        Long join1 = memberService.join("memberA", "aaa@naver.com", "비밀번호1");
+        Long join2 = memberService.join("memberB", "bbb@naver.com", "비밀번호2");
+        Long join3 = memberService.join("memberC", "ccc@naver.com", "비밀번호3");
 
-        Member memberB = new Member();
-        memberB.setMemberName("memberB");
-        memberB.setEmail("bbb@naver.com");
-        memberB.setStatus(true);
+        Member memberA = memberService.findOne(join1).get();
+        Member memberB = memberService.findOne(join2).get();
+        Member memberC = memberService.findOne(join3).get();
 
-        Member memberC = new Member();
-        memberC.setMemberName("memberC");
-        memberC.setEmail("ccc@naver.com");
-        memberC.setStatus(true);
-
-        memberService.join(memberA);
-        memberService.join(memberB);
-        memberService.join(memberC);
 
         //A와 B가 친구
         FriendShip friendShip1 = new FriendShip(memberA, memberB);
@@ -78,12 +75,11 @@ public class TestDB {
 
     @Transactional
     public void scheduleInit() {
-        Member member = new Member();
-        member.setMemberName("memberA");
-        Space memberASpace = new MemberSpace(member);
-        Schedule schedule = new Schedule(memberASpace);
 
-        scheduleService.makeSchedule(schedule);
+        Long join = memberService.join("memberD", "ddd@naver.com", "비밀번호4");
+        Member memberA = memberService.findOne(join).get();
+
+        Schedule schedule = memberA.getMemberSpace().getSchedule();
 
         Category studyCategory = new Category(schedule, "공부");
         Category workOutCategory = new Category(schedule, "운동");
@@ -100,4 +96,6 @@ public class TestDB {
         ToDo healthToDo = new ToDo(workOutCategory, "헬스", false, LocalDateTime.now());
         toDoService.makeTodo(healthToDo);
     }
+
+
 }

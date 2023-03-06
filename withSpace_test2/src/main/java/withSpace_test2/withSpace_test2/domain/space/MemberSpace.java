@@ -11,7 +11,7 @@ import withSpace_test2.withSpace_test2.domain.Member;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class MemberSpace extends Space {
 
 
@@ -23,9 +23,15 @@ public class MemberSpace extends Space {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+
     public MemberSpace(Member member) {
         this.member = member;
     }
+
 }
 
 
