@@ -31,10 +31,10 @@ public class Member {   //회원
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MemberSpace memberSpace;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<FriendShip> friendRequester = new ArrayList<>(); //친구 신청한 사람
 
-    @OneToMany(mappedBy = "friend")
+    @OneToMany(mappedBy = "friend", cascade = CascadeType.REMOVE)
     private List<FriendShip> friendReceiver = new ArrayList<>();//친구 신청 받은 사람
 
 
