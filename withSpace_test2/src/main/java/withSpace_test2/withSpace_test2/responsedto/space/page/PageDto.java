@@ -17,13 +17,13 @@ public class PageDto { //얘는 좀 스페이스 이런데서 쓰이는 대략�
 
 
     public PageDto(Page page) {
-        this.id = page.getId();
+        this.pageId = page.getId();
         this.title = page.getTitle();
         this.childPageList = page.getChildPages().stream().map(PageDto::new).collect(Collectors.toList());
     }
 
     public PageDto(Page page, boolean hasParent) {
-        this.id = page.getId();
+        this.pageId = page.getId();
         this.title = page.getTitle();
         //if (!hasParent) {
             this.parentId = page.getParentPage() != null ? page.getParentPage().getId() : null;

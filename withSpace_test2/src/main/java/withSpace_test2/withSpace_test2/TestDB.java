@@ -39,6 +39,7 @@ public class TestDB {
 
     // pageInit()에 사용
     private final PageService pageService;
+    private final BlockService blockService;
 
 
     @PostConstruct
@@ -48,6 +49,8 @@ public class TestDB {
         teamInit();
         pageInit();
     }
+
+
 
     @Transactional
     public void pageInit() {
@@ -64,6 +67,10 @@ public class TestDB {
 
         PageCreateRequestDto thirdPageDto= new PageCreateRequestDto("페이지 제목3", Optional.ofNullable(firstPageId));
         pageService.makePage(spaceId, thirdPageDto);
+
+        //블록생성
+        Long blockId1 = blockService.makeBlock(firstPageId, join);
+        Long blockId2 = blockService.makeBlock(firstPageId, join);
 
     }
 

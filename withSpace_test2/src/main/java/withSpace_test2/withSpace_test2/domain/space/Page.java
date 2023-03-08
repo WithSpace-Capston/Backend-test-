@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,9 @@ public class Page {
     private List<Block> blockList = new ArrayList<>();
 
     private String title;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 
     public Page(String title) {
