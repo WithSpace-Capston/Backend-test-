@@ -2,10 +2,13 @@ package withSpace_test2.withSpace_test2.domain;
 
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import withSpace_test2.withSpace_test2.domain.friend.FriendShip;
 import withSpace_test2.withSpace_test2.domain.space.MemberSpace;
+import withSpace_test2.withSpace_test2.domain.space.Space;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Member {   //회원
 
     @Id
@@ -27,11 +31,11 @@ public class Member {   //회원
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MemberSpace memberSpace;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<FriendShip> friendRequester = new ArrayList<>(); //친구 신청한 사람
 
-    @OneToMany(mappedBy = "friend")
-    private List<FriendShip> friendRequestee = new ArrayList<>();//친구 신청 받은 사람
+    @OneToMany(mappedBy = "friend", cascade = CascadeType.REMOVE)
+    private List<FriendShip> friendReceiver = new ArrayList<>();//친구 신청 받은 사람
 
 
     private String email;
@@ -40,6 +44,18 @@ public class Member {   //회원
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Boolean status;
+
+    //연관관계 편의 메소드//
+    public void setMemberSpace(MemberSpace memberSpace) {
+        this.memberSpace = memberSpace;
+        memberSpace.setMember(this);
+    }
+
+    public Member( String memberName, String email, String password) {
+        this.memberName = memberName;
+        this.email = email;
+        this.password = password;
+    }
 
 
 }
