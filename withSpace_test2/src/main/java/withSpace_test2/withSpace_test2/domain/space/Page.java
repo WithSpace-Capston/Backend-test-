@@ -33,6 +33,8 @@ public class Page {
     @OneToMany(mappedBy = "page")
     private List<Block> blockList = new ArrayList<>();
 
+    private String title;
+
 
     public void addchildPage(Page page) {
         page.setParentPage(this);

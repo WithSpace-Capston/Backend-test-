@@ -41,13 +41,10 @@ public class TeamService {
         if (team == null) {
             // 팀이 존재하지 않는 경우
         }
-        int teamCount = team.getMemberCount() + 1;
-        team.setMemberCount(teamCount); //setter말고 더 좋은방법 있을라나,,?
-        makeMemberTeamRelation(member, team);
 
-        System.out.println("==================================================================================");
-        System.out.println(teamId);
-        System.out.println(team.getMemberCount());
+        makeMemberTeamRelation(member, team);
+        teamRepository.incrementMemberCount(teamId);
+
 
         return teamId;
     }

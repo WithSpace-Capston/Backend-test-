@@ -3,6 +3,7 @@ package withSpace_test2.withSpace_test2.responsedto.memberTeam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import withSpace_test2.withSpace_test2.domain.Member;
 import withSpace_test2.withSpace_test2.domain.MemberTeam;
 import withSpace_test2.withSpace_test2.domain.Team;
 
@@ -12,15 +13,19 @@ import withSpace_test2.withSpace_test2.domain.Team;
 public class MemberTeamResponseDto {
 
 
-    private Long teamId;
-    private String teamName;
+    private Long userId;
+    private String memberName;
+    private boolean status;
 
 
 
 
     public MemberTeamResponseDto(MemberTeam memberTeam) {
-        Team team = memberTeam.getTeam();
-        this.teamId = team.getId();
-        this.teamName = team.getTeamName();
+        Member member = memberTeam.getMember();
+        this.userId = member.getId();
+        this.memberName = member.getMemberName();
+
+        //this.status = member.getStatus();
+        this.status = member.getStatus() != null && member.getStatus().booleanValue();
     }
 }

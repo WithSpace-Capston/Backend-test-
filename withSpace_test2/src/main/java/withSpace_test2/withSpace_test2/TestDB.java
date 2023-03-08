@@ -44,6 +44,12 @@ public class TestDB {
         scheduleInit();
         friendInit();
         teamInit();
+        pageInit();
+    }
+
+    @Transactional
+    public void pageInit() {
+
     }
 
     @Transactional
