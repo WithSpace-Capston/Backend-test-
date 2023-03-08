@@ -32,6 +32,12 @@ public class Team {
 
     private String teamName;
 
+    //연관관계 편의 메소드//
+    public void setTeamSpace(TeamSpace teamSpace) {
+        this.teamSpace = teamSpace;
+        teamSpace.setTeam(this);
+    }
+
     public Team(String teamName) {
         this.teamName = teamName;
         memberCount = 1; //팀 생성한 member는 바로 팀 가입

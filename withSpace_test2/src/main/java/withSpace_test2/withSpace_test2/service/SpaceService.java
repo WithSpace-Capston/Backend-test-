@@ -10,12 +10,20 @@ import withSpace_test2.withSpace_test2.domain.space.Space;
 import withSpace_test2.withSpace_test2.domain.space.TeamSpace;
 import withSpace_test2.withSpace_test2.repository.SpaceRepository;
 
+import java.util.Optional;
+
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class SpaceService {
 
     private final SpaceRepository spaceRepository;
+
+    public Optional<Space> findOne(Long spaceId) {
+        return spaceRepository.findById(spaceId);
+    }
+
+
 
     /**
      * 이 메소드를 쓸지말지 모르겠음..

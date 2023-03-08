@@ -2,7 +2,9 @@ package withSpace_test2.withSpace_test2.domain.space;
 
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Page {
 
     @Id
@@ -36,9 +39,13 @@ public class Page {
     private String title;
 
 
-    public void addchildPage(Page page) {
-        page.setParentPage(this);
-        this.childPages.add(page);
+    public Page(String title) {
+        this.title = title;
+    }
+
+    public void addchildPage(Page childPage) {
+        childPage.setParentPage(this);
+        this.childPages.add(childPage);
     }
 
 }

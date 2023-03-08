@@ -2,9 +2,7 @@ package withSpace_test2.withSpace_test2.responsedto.space;
 
 import lombok.Data;
 import withSpace_test2.withSpace_test2.domain.Member;
-import withSpace_test2.withSpace_test2.domain.space.Page;
-import withSpace_test2.withSpace_test2.domain.space.schedule.Schedule;
-import withSpace_test2.withSpace_test2.responsedto.page.PageDto;
+import withSpace_test2.withSpace_test2.responsedto.space.page.PageDto;
 
 import java.util.ArrayList;
 import java.util.List;

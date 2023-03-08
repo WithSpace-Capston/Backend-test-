@@ -6,8 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import withSpace_test2.withSpace_test2.domain.Member;
 import withSpace_test2.withSpace_test2.domain.MemberTeam;
 import withSpace_test2.withSpace_test2.domain.Team;
+import withSpace_test2.withSpace_test2.domain.space.TeamSpace;
+import withSpace_test2.withSpace_test2.domain.space.schedule.Schedule;
 import withSpace_test2.withSpace_test2.repository.MemberTeamRepository;
+import withSpace_test2.withSpace_test2.repository.ScheduleRepository;
+import withSpace_test2.withSpace_test2.repository.SpaceRepository;
 import withSpace_test2.withSpace_test2.repository.TeamRepository;
+import withSpace_test2.withSpace_test2.responsedto.schedule.ScheduleDto;
 
 import javax.swing.text.Style;
 import java.util.Optional;
@@ -20,6 +25,8 @@ public class TeamService {
     private final TeamRepository teamRepository;
 
     private final MemberTeamRepository memberTeamRepository;
+    private final SpaceRepository spaceRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Transactional
     public Long makeTeam(Member member, String teamName) { //팀 생성 - 팀을 생성하는 회원에게는 바로 팀 부여
@@ -29,6 +36,15 @@ public class TeamService {
         teamRepository.save(team);
 
         makeMemberTeamRelation(member, team); //멤버팀 연관관계 생성
+
+        //팀 생성시 스페이스 생성 + 부여
+        TeamSpace teamSpace = new TeamSpace(team);
+        team.setTeamSpace(teamSpace);
+        spaceRepository.save(teamSpace);
+
+        //스페이스 생성했으니 바로 스케줄도 만들어서 줌..
+        Schedule schedule = new Schedule(teamSpace);
+        scheduleRepository.save(schedule);
 
         return team.getId();
     }

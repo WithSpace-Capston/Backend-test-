@@ -53,7 +53,7 @@ public class MemberController {
         Member member = memberOptional.orElseThrow(() -> new EntityNotFoundException("회원 조회 실패"));
 
         MemberSpaceDto memberSpaceDto = new MemberSpaceDto(member);
-        BasicResponse basicResponse = new BasicResponse<>(1, "회원 조회 성공", memberSpaceDto);
+        BasicResponse basicResponse = new BasicResponse<>(1, "스페이스 조회 성공", memberSpaceDto);
         return new ResponseEntity<>(basicResponse, HttpStatus.OK);
     }
 

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Getter
@@ -23,6 +25,9 @@ public class Block {
     private Page page;
 
     private String content;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Block(Page page) {
         this.page = page;
