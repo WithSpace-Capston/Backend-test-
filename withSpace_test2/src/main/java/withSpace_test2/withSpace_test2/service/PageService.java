@@ -80,6 +80,7 @@ public class PageService {
         return pageRepository.findById(pageId);
     }
 
+    @Transactional
     public void updatePage(Long pageId, PageUpdateRequestDto requestDto) {
         Optional<Page> optionalPage = pageRepository.findById(pageId);
         Page page = optionalPage.orElseThrow(() -> new EntityNotFoundException("페이지를 찾을 수 없습니다. pageId: " + pageId));
