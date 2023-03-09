@@ -36,7 +36,6 @@ public class MemberController {
 
     @GetMapping("/member/{memberId}") //회원 단건 조회
     public ResponseEntity<BasicResponse> getMember(@PathVariable("memberId") Long memberId) {
-        //Optional<Member> member = memberService.findOne(memberId);
         Optional<Member> memberOptional = memberService.findOne(memberId);
 
         Member member = memberOptional.orElseThrow(() -> new EntityNotFoundException("회원 조회 실패"));

@@ -1,5 +1,6 @@
 package withSpace_test2.withSpace_test2.service;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,6 @@ public class BlockService {
     private final PageRepository pageRepository;
     private final BlockRepository blockRepository;
     private final MemberRepository memberRepository;
-
 
     @Transactional
     public Long makeBlock(Long pageId, Long memberId) { //블럭 생성
@@ -65,4 +65,5 @@ public class BlockService {
     public Optional<Block> findOne(Long blockId) {
         return blockRepository.findById(blockId);
     }
+
 }

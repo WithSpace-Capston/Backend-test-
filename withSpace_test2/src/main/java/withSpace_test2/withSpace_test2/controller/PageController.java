@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.*;
 import withSpace_test2.withSpace_test2.domain.Member;
 import withSpace_test2.withSpace_test2.domain.space.Block;
 import withSpace_test2.withSpace_test2.domain.space.Page;
+import withSpace_test2.withSpace_test2.requestdto.space.page.PageUpdateRequestDto;
 import withSpace_test2.withSpace_test2.requestdto.space.page.block.BlockCreateRequestDto;
 import withSpace_test2.withSpace_test2.requestdto.space.page.block.BlockUpdateRequestDto;
 import withSpace_test2.withSpace_test2.responsedto.BasicResponse;
+import withSpace_test2.withSpace_test2.responsedto.space.page.PageBaseResponse;
 import withSpace_test2.withSpace_test2.responsedto.space.page.PageDetailDto;
 import withSpace_test2.withSpace_test2.responsedto.space.page.block.BlockDto;
 import withSpace_test2.withSpace_test2.responsedto.space.page.block.UpdateBlockResponse;
 import withSpace_test2.withSpace_test2.service.BlockService;
 import withSpace_test2.withSpace_test2.service.MemberService;
 import withSpace_test2.withSpace_test2.service.PageService;
-
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class PageController {
-
+    private static final int SUCCESS = 200;
+    private static final int CREATED = 201;
     private final PageService pageService;
     private final BlockService blockService;
     private final MemberService memberService;
@@ -54,6 +54,17 @@ public class PageController {
 
         return ResponseEntity.ok(pageDetailDto);
     }
+
+    @PatchMapping("/page/{pageId}")  //페이지 제목 변경
+    public ResponseEntity<PageBaseResponse> updatePage(@PathVariable Long pageId, @RequestBody PageUpdateRequestDto requestDto){
+
+        pageService.updatePage(pageId, requestDto);
+
+        PageBaseResponse pageBaseResponse = new PageBaseResponse(pageId, SUCCESS, "페이지 제목 변경 완료");
+
+        return new ResponseEntity<>(pageBaseResponse, HttpStatus.OK);
+    }
+
     @PatchMapping("/block/{blockId}") //블럭 업데이트
     public ResponseEntity<UpdateBlockResponse> updateBlock(@PathVariable Long blockId, @RequestBody BlockUpdateRequestDto requestDto) {
         Optional<Block> optionalBlock = blockService.findOne(blockId);
@@ -70,6 +81,6 @@ public class PageController {
         return new ResponseEntity<>(updateBlockResponse, HttpStatus.OK);
     }
 
-    //페이지 제목 업데이트필요
+
 
 }

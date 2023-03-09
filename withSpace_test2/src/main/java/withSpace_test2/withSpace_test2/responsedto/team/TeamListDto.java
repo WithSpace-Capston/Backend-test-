@@ -26,6 +26,10 @@ public class TeamListDto {
         memberTeamResponseDtoList = memberTeam.getTeam().getMemberTeams().stream()
                 .map(MemberTeamResponseDto::new)
                 .collect(Collectors.toList());
-
+    }
+    public TeamListDto(Team team) {
+        this(team.getId(), team.getMemberCount(), team.getTeamName(), team.getMemberTeams().stream()
+                .map(MemberTeamResponseDto::new)
+                .collect(Collectors.toList()));
     }
 }
