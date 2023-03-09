@@ -7,12 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import withSpace_test2.withSpace_test2.domain.Member;
 import withSpace_test2.withSpace_test2.domain.Team;
 import withSpace_test2.withSpace_test2.domain.friend.FriendShip;
-import withSpace_test2.withSpace_test2.domain.space.MemberSpace;
-import withSpace_test2.withSpace_test2.domain.space.Space;
 import withSpace_test2.withSpace_test2.domain.space.schedule.Category;
 import withSpace_test2.withSpace_test2.domain.space.schedule.Schedule;
 import withSpace_test2.withSpace_test2.domain.space.schedule.ToDo;
 import withSpace_test2.withSpace_test2.requestdto.member.MemberJoinRequestDto;
+import withSpace_test2.withSpace_test2.requestdto.space.page.PageCreateRequestDto;
 import withSpace_test2.withSpace_test2.service.*;
 
 import java.time.LocalDateTime;
@@ -38,12 +37,41 @@ public class TestDB {
     // teamInit()에 사용
     private final TeamService teamService;
 
+    // pageInit()에 사용
+    private final PageService pageService;
+    private final BlockService blockService;
+
 
     @PostConstruct
     public void postConstruct() {
         scheduleInit();
         friendInit();
         teamInit();
+        pageInit();
+    }
+
+
+
+    @Transactional
+    public void pageInit() {
+        MemberJoinRequestDto  mj = new MemberJoinRequestDto("pageMember", "page@naver.com", "비밀번호");
+        Long join = memberService.join(mj);
+        Long spaceId = memberService.findOne(join).get().getMemberSpace().getId();
+
+        PageCreateRequestDto firstPageDto = new PageCreateRequestDto("페이지 제목", null);
+
+        Long firstPageId = pageService.makePage(spaceId, firstPageDto);
+
+        PageCreateRequestDto secondPageDto= new PageCreateRequestDto("페이지 제목2", Optional.ofNullable(firstPageId));
+        pageService.makePage(spaceId, secondPageDto);
+
+        PageCreateRequestDto thirdPageDto= new PageCreateRequestDto("페이지 제목3", Optional.ofNullable(firstPageId));
+        pageService.makePage(spaceId, thirdPageDto);
+
+        //블록생성
+        Long blockId1 = blockService.makeBlock(firstPageId, join);
+        Long blockId2 = blockService.makeBlock(firstPageId, join);
+
     }
 
     @Transactional

@@ -5,6 +5,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import withSpace_test2.withSpace_test2.domain.Member;
+
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,9 +25,25 @@ public class Block {
     @JoinColumn(name = "page_id")
     private Page page;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "updated_by_member_id")
+    private Member updatedBy;
+
     private String content;
 
-    public Block(Page page) {
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public Block(Page page, Member member) { //블럭생성
         this.page = page;
+        page.getBlockList().add(this);
+
+        createdBy = member;
+        updatedBy = member; //일단 생성시에는 만든사람이 곧 최근에 업데이트한 사람으로
+
     }
 }
