@@ -64,4 +64,16 @@ public class TeamController {
         return new ResponseEntity<>(basicResponse, HttpStatus.CREATED);
 
     }
+
+    @DeleteMapping("/team/{teamId}") //팀 삭제
+    public ResponseEntity<BasicResponse> deleteTeam(@PathVariable Long teamId) {
+        Optional<Team> teamOptional = teamService.findOne(teamId);
+        Team team = teamOptional.orElseThrow(() -> new EntityNotFoundException("팀 조회 실패"));
+
+        teamService.deleteTeam(team.getId());
+
+        BasicResponse basicResponse = new BasicResponse(1, "팀 삭제 성공", null);
+
+        return new ResponseEntity<>(basicResponse, HttpStatus.OK);
+    }
 }

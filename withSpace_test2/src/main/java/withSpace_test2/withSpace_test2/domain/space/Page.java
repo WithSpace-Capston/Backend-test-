@@ -34,7 +34,7 @@ public class Page {
     private Space space;
 
 
-    @OneToMany(mappedBy = "page")
+    @OneToMany(mappedBy = "page", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Block> blockList = new ArrayList<>();
 
     private String title;

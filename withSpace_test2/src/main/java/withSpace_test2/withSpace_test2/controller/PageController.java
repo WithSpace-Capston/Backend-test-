@@ -82,6 +82,27 @@ public class PageController {
         return new ResponseEntity<>(basicResponse, HttpStatus.OK);
     }
 
+    @DeleteMapping("/page/{pageId}") // 페이지 삭제
+    public ResponseEntity<BasicResponse> deletePage(@PathVariable Long pageId) {
+        pageService.deletePage(pageId);
+
+        BasicResponse basicResponse
+                = new BasicResponse(1, "페이지 삭제 완료", null);
+
+        return new ResponseEntity<>(basicResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/block/{blockId}") //블록 삭제
+    public ResponseEntity<BasicResponse> deleteBlock(@PathVariable Long blockId) {
+        Optional<Block> optionalBlock = blockService.findOne(blockId);
+        Block block = optionalBlock.orElseThrow(()
+                -> new EntityNotFoundException("블럭이 없습니다. blockId: " + blockId));
+
+        blockService.deleteBlock(block.getId());
+
+        BasicResponse basicResponse = new BasicResponse(1, "블럭 삭제 성공", null);
+        return new ResponseEntity<>(basicResponse, HttpStatus.OK);
+    }
 
 
 }

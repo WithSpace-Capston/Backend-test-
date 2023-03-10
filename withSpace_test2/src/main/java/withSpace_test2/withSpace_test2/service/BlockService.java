@@ -68,6 +68,13 @@ public class BlockService {
 
         return block.getId();
     }
+    @Transactional
+    public void deleteBlock(Long blockId) {
+        Optional<Block> optionalBlock = blockRepository.findById(blockId);
+        Block block = optionalBlock.orElseThrow(()
+                -> new EntityNotFoundException("블럭이 없습니다. blockId: " + blockId));
+        blockRepository.delete(block);
+    }
 
     public Optional<Block> findOne(Long blockId) {
         return blockRepository.findById(blockId);
