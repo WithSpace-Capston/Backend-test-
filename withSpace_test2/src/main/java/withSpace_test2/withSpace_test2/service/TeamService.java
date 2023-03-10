@@ -72,17 +72,19 @@ public class TeamService {
         return teamId;
     }
 
+    @Transactional
     public void makeMemberTeamRelation(Member member, Team team) {
 
         // 멤버-팀 관계 생성
         MemberTeam memberTeam = new MemberTeam(member, team);
+        team.setMemberCount(team.getMemberCount() + 1);
         memberTeamRepository.save(memberTeam);
 
         // 멤버 - 멤버팀 - 팀 이어주기
         member.getMemberTeams().add(memberTeam);
         team.getMemberTeams().add(memberTeam);
 
-        teamRepository.incrementMemberCount(team.getId());
+
     }
 
     public Optional<Team> findOne(Long temaId) {
