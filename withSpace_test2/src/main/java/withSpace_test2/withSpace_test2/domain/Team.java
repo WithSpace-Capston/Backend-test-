@@ -40,7 +40,7 @@ public class Team {
 
     public Team(String teamName) {
         this.teamName = teamName;
-        memberCount = 1; //팀 생성한 member는 바로 팀 가입
+        memberCount = 0;
     }
 
 }

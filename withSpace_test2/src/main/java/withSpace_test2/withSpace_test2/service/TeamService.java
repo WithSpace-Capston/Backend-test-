@@ -46,6 +46,9 @@ public class TeamService {
         Schedule schedule = new Schedule(teamSpace);
         scheduleRepository.save(schedule);
 
+        System.out.println(team.getMemberCount()+"============================================================================");
+
+
         return team.getId();
     }
 
@@ -64,10 +67,13 @@ public class TeamService {
             makeMemberTeamRelation(member, team);
         }
 
+        System.out.println(team.getMemberCount()+"============================================================================");
+
         return teamId;
     }
 
     public void makeMemberTeamRelation(Member member, Team team) {
+
         // 멤버-팀 관계 생성
         MemberTeam memberTeam = new MemberTeam(member, team);
         memberTeamRepository.save(memberTeam);
@@ -89,10 +95,8 @@ public class TeamService {
         Team team = teamOptional.orElseThrow(()
                 -> new EntityNotFoundException("팀이 없음 - teamService.deleteTeam / teamId: " + teamId));
 
-        memberTeamRepository.deleteByTeamId(teamId);
-        teamRepository.deleteById(teamId);
-
         teamRepository.delete(team);
+        memberTeamRepository.deleteByTeamId(teamId);
     }
 
 }
