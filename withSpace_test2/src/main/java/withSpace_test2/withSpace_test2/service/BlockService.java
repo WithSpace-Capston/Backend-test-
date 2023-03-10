@@ -13,6 +13,7 @@ import withSpace_test2.withSpace_test2.repository.MemberRepository;
 import withSpace_test2.withSpace_test2.repository.PageRepository;
 import withSpace_test2.withSpace_test2.requestdto.space.page.block.BlockUpdateRequestDto;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -41,9 +42,13 @@ public class BlockService {
     }
 
     @Transactional
-    public void updateBlock(Long blockId, BlockUpdateRequestDto requestDto) { //블럭 업데이트
+    public Long updateBlock(Long blockId, BlockUpdateRequestDto requestDto) { //블럭 업데이트
         Block block = blockRepository.findById(blockId)
                 .orElseThrow(() -> new EntityNotFoundException("블록을 찾을 수 없습니다. blockId: " + blockId));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        block.setUpdatedAt(now);
 
         if (requestDto.getMemberId() != null) {
             Member updatedBy = memberRepository.findById(requestDto.getMemberId())
@@ -60,6 +65,8 @@ public class BlockService {
         }
 
         blockRepository.save(block);
+
+        return block.getId();
     }
 
     public Optional<Block> findOne(Long blockId) {
