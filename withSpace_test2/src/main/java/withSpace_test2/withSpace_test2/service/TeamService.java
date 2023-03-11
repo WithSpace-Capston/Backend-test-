@@ -1,5 +1,6 @@
 package withSpace_test2.withSpace_test2.service;
 
+import com.querydsl.core.Query;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -97,8 +98,13 @@ public class TeamService {
         Team team = teamOptional.orElseThrow(()
                 -> new EntityNotFoundException("팀이 없음 - teamService.deleteTeam / teamId: " + teamId));
 
+        QMemberTeam memberTeam = QMemberTeam.memberTeam;
+        BooleanExpression teamIdEquals = memberTeam.team.id.eq(teamId);
+        Iterable<MemberTeam> memberTeams = memberTeamRepository.findAll(teamIdEquals);
+        memberTeamRepository.deleteAll(memberTeams);
+
+
         teamRepository.delete(team);
-        memberTeamRepository.deleteByTeamId(teamId);
     }
 
 }
