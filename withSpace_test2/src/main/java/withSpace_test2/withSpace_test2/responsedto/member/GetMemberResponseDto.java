@@ -18,7 +18,6 @@ public class GetMemberResponseDto {
 
     private Long id;
     private String email;
-    private String password;
     private String memberName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -27,9 +26,9 @@ public class GetMemberResponseDto {
 //    private MemberSpaceDto memberSpaceDto;
 
     private int teamCount; //가입되어있는 팀의 갯수
-    private List<TeamListDto> teamListDtoList;
+    private List<TeamListDto> teamList;
 
-    private FriendListDto friendListDto;
+    private FriendListDto friendList;
 
     //private List<FriendDto> friendList = new ArrayList<>();
 
@@ -39,7 +38,6 @@ public class GetMemberResponseDto {
     public GetMemberResponseDto(Member member) {
         this.id = member.getId();
         this.email = member.getEmail();
-        this.password = member.getPassword();
         this.memberName = member.getMemberName();
         this.createdAt = member.getCreatedAt();
         this.updatedAt = member.getUpdatedAt();
@@ -50,15 +48,15 @@ public class GetMemberResponseDto {
 
         // 회원의 입장에서 팀들의 정보 담기
         if (member.getMemberTeams() != null) {
-            teamListDtoList = member.getMemberTeams().stream()
+            teamList = member.getMemberTeams().stream()
                     .map(memberTeam -> new TeamListDto(memberTeam))
                     .collect(Collectors.toList());
-            teamCount = teamListDtoList.size();
+            teamCount = teamList.size();
         }
 
 
         // 친구요청을 건 상대  && status가 accepted인 경우 friendList에 저장
-        friendListDto = new FriendListDto(
+        friendList = new FriendListDto(
                 member.getFriendRequester().stream()
                         .filter(friendShip -> friendShip.getStatus() == FriendStatus.ACCEPTED)
                         .map(friendShip -> new FriendDto(friendShip.getFriend()))

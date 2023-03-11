@@ -15,7 +15,6 @@ import withSpace_test2.withSpace_test2.responsedto.BasicResponse;
 import withSpace_test2.withSpace_test2.responsedto.space.page.PageBaseResponse;
 import withSpace_test2.withSpace_test2.responsedto.space.page.PageDetailDto;
 import withSpace_test2.withSpace_test2.responsedto.space.page.block.BlockDto;
-import withSpace_test2.withSpace_test2.responsedto.space.page.block.UpdateBlockResponse;
 import withSpace_test2.withSpace_test2.service.BlockService;
 import withSpace_test2.withSpace_test2.service.MemberService;
 import withSpace_test2.withSpace_test2.service.PageService;
@@ -66,21 +65,44 @@ public class PageController {
     }
 
     @PatchMapping("/block/{blockId}") //블럭 업데이트
-    public ResponseEntity<UpdateBlockResponse> updateBlock(@PathVariable Long blockId, @RequestBody BlockUpdateRequestDto requestDto) {
-        Optional<Block> optionalBlock = blockService.findOne(blockId);
-        Block block = optionalBlock.orElseThrow(() -> new EntityNotFoundException("블럭을 찾을 수 없습니다. blockId: " + blockId));
+    public ResponseEntity<BasicResponse> updateBlock(@PathVariable Long blockId, @RequestBody BlockUpdateRequestDto requestDto) {
+        Optional<Block> optionalBeforeBlock = blockService.findOne(blockId);
+        Block beforUpdateBlock = optionalBeforeBlock.orElseThrow(() -> new EntityNotFoundException("블럭을 찾을 수 없습니다. blockId: " + blockId));
 
         Optional<Member> optionalMember = memberService.findOne(requestDto.getMemberId());
         Member member = optionalMember.orElseThrow(() -> new EntityNotFoundException("멤버를 찾을 수 없습니다. in 블럭 업데이트"));
 
         // 업데이트
-        blockService.updateBlock(blockId, requestDto);
+        Long updateBlockId = blockService.updateBlock(blockId, requestDto);
+        Optional<Block> optionalBlock = blockService.findOne(blockId);
+        Block block = optionalBlock.orElseThrow(() -> new EntityNotFoundException("블럭을 찾을 수 없습니다. blockId: " + blockId));
 
-        UpdateBlockResponse updateBlockResponse = new UpdateBlockResponse(member.getMemberName(), requestDto);
+        BasicResponse basicResponse = new BasicResponse(1, "블럭 업데이트 성공", new BlockDto(block));
 
-        return new ResponseEntity<>(updateBlockResponse, HttpStatus.OK);
+        return new ResponseEntity<>(basicResponse, HttpStatus.OK);
     }
 
+    @DeleteMapping("/page/{pageId}") // 페이지 삭제
+    public ResponseEntity<BasicResponse> deletePage(@PathVariable Long pageId) {
+        pageService.deletePage(pageId);
+
+        BasicResponse basicResponse
+                = new BasicResponse(1, "페이지 삭제 완료", null);
+
+        return new ResponseEntity<>(basicResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/block/{blockId}") //블록 삭제
+    public ResponseEntity<BasicResponse> deleteBlock(@PathVariable Long blockId) {
+        Optional<Block> optionalBlock = blockService.findOne(blockId);
+        Block block = optionalBlock.orElseThrow(()
+                -> new EntityNotFoundException("블럭이 없습니다. blockId: " + blockId));
+
+        blockService.deleteBlock(block.getId());
+
+        BasicResponse basicResponse = new BasicResponse(1, "블럭 삭제 성공", null);
+        return new ResponseEntity<>(basicResponse, HttpStatus.OK);
+    }
 
 
 }

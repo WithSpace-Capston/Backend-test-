@@ -19,18 +19,23 @@ public class PageDto { //얘는 좀 스페이스 이런데서 쓰이는 대략�
     public PageDto(Page page) {
         this.pageId = page.getId();
         this.title = page.getTitle();
-        this.childPageList = page.getChildPages().stream().map(PageDto::new).collect(Collectors.toList());
+        this.parentId = page.getParentPage() != null ? page.getParentPage().getId() : null;
+        this.childPageList = page.getChildPages().stream()
+                .filter(childPage -> !childPage.equals(page.getParentPage())) // Filter out parent page
+                .map(PageDto::new)
+                .collect(Collectors.toList());
     }
 
     public PageDto(Page page, boolean hasParent) {
         this.pageId = page.getId();
         this.title = page.getTitle();
-        //if (!hasParent) {
+        if (!hasParent) {
             this.parentId = page.getParentPage() != null ? page.getParentPage().getId() : null;
-        //}
+        }
         this.childPageList = page.getChildPages().stream()
-                .map(p -> new PageDto(p, false)).collect(Collectors.toList());
-
+                .filter(childPage -> !childPage.equals(page.getParentPage())) // Filter out parent page
+                .map(childPage -> new PageDto(childPage, true))
+                .collect(Collectors.toList());
     }
 
 //    public PageDto(Page page) {

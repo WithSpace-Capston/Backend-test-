@@ -15,9 +15,5 @@ import java.util.Optional;
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
-    @Modifying
-    @Query("UPDATE Team t SET t.memberCount = t.memberCount + 1 WHERE t.id = :teamId")
-    void incrementMemberCount(@Param("teamId") Long teamId);
-
 
 }

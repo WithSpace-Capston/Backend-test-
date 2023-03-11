@@ -15,7 +15,7 @@ public class TeamListDto {
     private Long teamId;
     private int memberCount;
     private String teamName;
-    private List<MemberTeamResponseDto> memberTeamResponseDtoList;
+    private List<MemberTeamResponseDto> memberTeamList;
 
     public TeamListDto(MemberTeam memberTeam) {
         Team team = memberTeam.getTeam();
@@ -23,7 +23,7 @@ public class TeamListDto {
         this.teamName = memberTeam.getTeamName();
         this.memberCount = team.getMemberCount();
 
-        memberTeamResponseDtoList = memberTeam.getTeam().getMemberTeams().stream()
+        memberTeamList = memberTeam.getTeam().getMemberTeams().stream()
                 .map(MemberTeamResponseDto::new)
                 .collect(Collectors.toList());
     }

@@ -1,11 +1,12 @@
 package withSpace_test2.withSpace_test2.service;
 
+import com.querydsl.core.Query;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import withSpace_test2.withSpace_test2.domain.Member;
-import withSpace_test2.withSpace_test2.domain.MemberTeam;
-import withSpace_test2.withSpace_test2.domain.Team;
+import withSpace_test2.withSpace_test2.domain.*;
 import withSpace_test2.withSpace_test2.domain.space.TeamSpace;
 import withSpace_test2.withSpace_test2.domain.space.schedule.Schedule;
 import withSpace_test2.withSpace_test2.repository.MemberTeamRepository;
@@ -46,37 +47,64 @@ public class TeamService {
         Schedule schedule = new Schedule(teamSpace);
         scheduleRepository.save(schedule);
 
+        System.out.println(team.getMemberCount()+"============================================================================");
+
+
         return team.getId();
     }
 
     @Transactional
     public Long join(Member member, Long teamId) { //팀 가입
         Optional<Team> teamOptional = teamRepository.findById(teamId);
-        Team team = teamOptional.orElse(null);
+        Team team = teamOptional.orElseThrow(()
+                -> new EntityNotFoundException("팀이 없음 - teamService.join / teamId: " + teamId));
 
-        if (team == null) {
-            // 팀이 존재하지 않는 경우
+
+        MemberTeamId memberTeamId = new MemberTeamId(member.getId(), teamId);
+        Optional<MemberTeam> memberTeamOptional = memberTeamRepository.findById(memberTeamId);
+        MemberTeam memberTeam = memberTeamOptional.orElse(null);
+
+        if (memberTeam == null) { //이미 가입되어있는 경우
+            makeMemberTeamRelation(member, team);
         }
 
-        makeMemberTeamRelation(member, team);
-        teamRepository.incrementMemberCount(teamId);
-
+        System.out.println(team.getMemberCount()+"============================================================================");
 
         return teamId;
     }
 
+    @Transactional
     public void makeMemberTeamRelation(Member member, Team team) {
+
         // 멤버-팀 관계 생성
         MemberTeam memberTeam = new MemberTeam(member, team);
+        team.setMemberCount(team.getMemberCount() + 1);
         memberTeamRepository.save(memberTeam);
 
         // 멤버 - 멤버팀 - 팀 이어주기
         member.getMemberTeams().add(memberTeam);
         team.getMemberTeams().add(memberTeam);
+
+
     }
 
     public Optional<Team> findOne(Long temaId) {
         return teamRepository.findById(temaId);
+    }
+
+    @Transactional
+    public void deleteTeam(Long teamId) {
+        Optional<Team> teamOptional = teamRepository.findById(teamId);
+        Team team = teamOptional.orElseThrow(()
+                -> new EntityNotFoundException("팀이 없음 - teamService.deleteTeam / teamId: " + teamId));
+
+        QMemberTeam memberTeam = QMemberTeam.memberTeam;
+        BooleanExpression teamIdEquals = memberTeam.team.id.eq(teamId);
+        Iterable<MemberTeam> memberTeams = memberTeamRepository.findAll(teamIdEquals);
+        memberTeamRepository.deleteAll(memberTeams);
+
+
+        teamRepository.delete(team);
     }
 
 }
